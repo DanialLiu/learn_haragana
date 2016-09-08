@@ -1,1 +1,1 @@
-# learn_haragana
+# A web tool for learn haragana & katakana
