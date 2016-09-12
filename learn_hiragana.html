@@ -1,15 +1,60 @@
-<html>
-<head>
-<title>Learn Hiragana</title>
-<meta charset="UTF-8">
-</head>
-<body>
-<div id="word" style="font-size: 280px"></div>
-<script type="text/javascript">
-    hiragana = "";
-    katakana = "ア a イ i ウ u エ e オ o カ ka キ ki ク ku ケ ke コ ko サ sa シ shi ス su セ se ソ so タ ta チ chi ツ tsu テ te ト to ハ ha ヒ hi フ hu ヘ he ホ ho ナ na ニ ni ヌ nu ネ ne ノ no マ ma ミ mi ム mu メ me モ mo ラ ra リ ri ル ru レ re ロ ro ヤ ya ユ yu ヨ yo ン n";
-    karr = katakana.split(" ");
-    document.getElementById("word").innerHTML = karr[0];
-</script>
-</body>
-</html>
+    <html>
+    <head>
+    <title>Learn Hiragana</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    </head>
+    <body>
+    <div id="word" style="font-size: 100px"></div>
+    <div id="text_tip"></div>
+    <input id="type_content" type="text" placeholder="press ENTER to finish" onkeypress="onTypeChar(this, event)"  />
+    <script type="text/javascript">
+        hiragana = "";
+        katakana = "ア a イ i ウ u エ e オ o カ ka キ ki ク ku ケ ke コ ko サ sa シ shi ス su セ se ソ so タ ta チ chi ツ tsu テ te ト to ハ ha ヒ hi フ fu ヘ he ホ ho ナ na ニ ni ヌ nu ネ ne ノ no マ ma ミ mi ム mu メ me モ mo ラ ra リ ri ル ru レ re ロ ro ヤ ya ユ yu ヨ yo ン n";
+
+        charArray = []
+        charIndex = -1
+        function next_word(chars)
+        {
+            charIndex = Math.floor(Math.random() * charArray.length / 2);
+            document.getElementById("word").innerHTML = charArray[charIndex * 2];
+            document.getElementById("text_tip").innerHTML = "请输入罗马字：";
+        }
+        function exam(chars)
+        {
+            charArray = chars.split(" "); 
+            next_word();
+        }
+        function onTypeChar(inField, e)
+        {
+            var charCode;
+            if(e && e.which)
+            {
+                charCode = e.which;
+            }
+            else if(window.event)
+            {
+                e = window.event;
+                charCode = e.keyCode;
+            }
+            if(charCode == 13)
+            {
+                v = document.getElementById("type_content").value
+                if(v.toLowerCase() == charArray[charIndex * 2 + 1])
+                {
+                    document.getElementById("text_tip").innerHTML = "Bingo!!!";
+                    setTimeout(next_word,500);
+                }
+                else
+                {
+                    document.getElementById("text_tip").innerHTML = "错误，正确答案为：" + charArray[charIndex * 2 + 1];
+                }
+                document.getElementById("type_content").value = "";
+            }
+        }
+        exam(katakana);
+        
+
+    </script>
+    </body>
+    </html>
